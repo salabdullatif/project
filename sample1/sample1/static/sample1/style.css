@@ -1,0 +1,111 @@
+<style type="text/css">
+
+
+.banner
+{
+    background: #468499;
+    height: 60px;
+    float: left;
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    font-family: "Helvetica";
+    line-height: 60px;
+    font-size: 30px;
+    font-style: bold;
+    color: white;
+    text-align: center;
+    z-index: 3;
+}
+
+.banner2
+{
+    background: #468499;
+    height: 60px;
+    float: left;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    font-family: "Helvetica";
+    line-height: 60px;
+    font-size: 30px;
+    font-style: bold;
+    color: white;
+    text-align: center;
+    z-index: 2;
+}
+
+.panelContainer
+{
+    float: left;
+    font-family: "Helvetica";
+    font-size: 10px;
+    margin: 60px auto;
+}
+
+.panel
+{
+    background: #468499;
+    padding: 10px;
+    border-radius: 25px;
+    z-index: 9;
+    margin: 5px;
+    float: left;
+    min-width: 180px;
+}
+
+.panel .header
+{
+    background: #b2acac;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    padding: 2px;
+    z-index: 11;
+    padding-left: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+label
+{
+    display: none
+}
+
+.panel .content
+{
+    background: white;
+    padding: 5px;
+    z-index: 10;
+    min-height: 50px;
+    font-size: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    vertical-align: middle;
+}
+
+.content
+{
+    line-height: 30px;
+    font-size: 20px;
+    margin: 0 auto;
+}
+
+.table
+{
+    width: 100%;
+}
+.table th
+{
+
+}
+
+.table td, th
+{
+    text-align: center;
+    padding: 10px;
+}
+
+
+</style>

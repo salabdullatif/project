@@ -1,0 +1,69 @@
+{% load staticfiles %}
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'sample1/style.css' %}">
+    <title>Crowd Control</title>  
+</head>
+<body>
+<div class="banner2">Crowd Control</div>
+        
+    </div>
+
+    <div class="panelContainer">
+    {% load filter %}
+    <form action="/job/createJob/" method="post" enctype="multipart/form-data">
+    <div class="panel" style="width:15%;">
+        <div class="header">Upload Data:</div>
+        <div class="content required">{{form.file}}</div>
+    </div>
+
+    {% csrf_token %}
+    
+    <div class="panel" style="width:80%;">
+        <div class="header">Basic Job Information:</div>
+        <div class="content required">
+        Job Title: {{form.title}}
+        Payment in cents: {{form.payment_cents}}
+        Instructions: {{form.instructions}}
+        CML: {{form.cml}}
+        </div>
+    </div>
+    
+    <div class="panel" style="width:97%;">
+        <div class="header">Judgement Information:</div>
+        <div class="content">
+        Judgements per unit: {{form.judgments_per_unit}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Confidence Fields: {{form.confidence_fields}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Maximum Judgments per unit: {{form.max_judgments_per_unit}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Minimum Unit Confidence: {{form.min_unit_confidence}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        
+    </div>
+    
+    <div class="panel" style="width:97%;">
+        <div class="header">Auto Order:</div>
+        <div class="content">
+        Enable Auto-Order: {{form.auto_order}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Auto-Order Threshold: {{form.auto_order_threshold}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Auto-Order Timeout (in seconds): {{form.auto_order_timeout}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+    </div>
+    
+    <div class="panel" style="width:97%;">
+        <div class="header">Contributor Information:</div>
+        <div class="content">
+        Included Countries: {{form.included_countries}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Excluded Countries: {{form.excluded_countries}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Units per Assignment: {{form.units_per_assignment}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+    </div>
+    
+    <div class="panel">
+        <input type="submit" value="Submit" />
+    </div>
+    
+</form>
+{% if error %}
+        <p style="color: red;">{{ errorMsg }}.Your job couldn't be created, please try again.</p>
+    {% endif %}
+</body> </html>
