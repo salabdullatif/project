@@ -5,6 +5,7 @@ from Tkconstants import RADIOBUTTON
 from django.db import models
 
 countries = (('US', 'United States'), ('GB', 'Great Britain'))
+channel_choices = (('internal', 'Internal'), ('external', 'External'), ('both', 'Internal + External'))
 
 class createJobForm(forms.Form):
     file = forms.FileField()
@@ -22,6 +23,9 @@ class createJobForm(forms.Form):
     included_countries = forms.MultipleChoiceField(choices=countries, required=False)
     excluded_countries = forms.MultipleChoiceField(choices=countries, required=False)
     units_per_assignment = forms.IntegerField(min_value=1, max_value=99, widget=forms.NumberInput, required=False)
+    quality = forms.ChoiceField(choices=((str(x), x) for x in range(1,4)))
+    channels = forms.ChoiceField(choices=channel_choices)
+    units_count = forms.IntegerField(min_value=1, max_value=100, widget=forms.NumberInput)
     
     
     #data / job setting (price/number of worker/quality))

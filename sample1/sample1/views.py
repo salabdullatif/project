@@ -5,6 +5,7 @@ import sample1
 import crowdflower
 import crowdflower.client
 import numpy as np
+import csv
 # Create your views here.
 
 key = 'gL34yyLa5W3fHwRqgbtS'
@@ -28,14 +29,33 @@ data = [
 ]
 
 def submitjob(request):
-  return HttpResponse("Done")
+    return HttpResponse("Done")
   
 def createjob(request):
     form = createJobForm(request.POST, request.FILES)
+    message = "Not Successful"
     if form.is_valid():
         confidence_fields = np.asarray(form.cleaned_data['confidence_fields'].split(' '))
-        included_countries = np.asarray(form.cleaned_data['included_countries'])
-        excluded_countries = np.asarray(form.cleaned_data['excluded_countries'])
+        included_countries = []
+        excluded_countries = []
+        for i in form.cleaned_data['included_countries']:
+            included_countries.append(str(i))
+        for i in form.cleaned_data['excluded_countries']:
+            excluded_countries.append(str(i))
+        sample = ['US', 'GB']
+        countries1 = [{"name":"United States","code":"US"},{"name":"United Kingdom","code":"GB"}]
+        
+        minimum_requirements = """{"priority":1, "skill_scores":{"level_1_contributors":1},"min_score":1}"""
+        if(int(form.cleaned_data['quality'])) == 1:
+            minimum_requirements = """{"priority":1, "skill_scores":{"level_1_contributors":1},"min_score":1}"""
+        elif(int(form.cleaned_data['quality'])) == 2:
+            minimum_requirements = """{"priority":1, "skill_scores":{"level_2_contributors":1},"min_score":1}"""
+        elif(int(form.cleaned_data['quality'])) == 3:
+            minimum_requirements = """{"priority":1, "skill_scores":{"level_3_contributors":1},"min_score":1}"""
+            
+        channels = str(form.cleaned_data['channels'])
+        units_count = int(form.cleaned_data['units_count'])
+            
         job = client.create_job(
                             {
                             'title': form.cleaned_data['title'],
@@ -50,11 +70,28 @@ def createjob(request):
                             'auto_order_threshold': form.cleaned_data['auto_order_threshold'],
                             'auto_order_timeout': form.cleaned_data['auto_order_timeout'],
                             'units_per_assignment': form.cleaned_data['units_per_assignment'],
-                            'included_countries': included_countries,
-                            'excluded_countries': excluded_countries,
+                            #'included_countries': countries1,
+                            #'excluded_countries': excluded_countries,
+                            "minimum_requirements": minimum_requirements
                             })
+       
+        
+        #Read data from csv file and send it as json
+        #file = open('/Users/karthicashokan/Downloads/classification/imagecat_data.csv','r')
+        
+        input_file = csv.DictReader(request.FILES['file'])
+        file_data = [] #list()
+        for row in input_file:
+            file_data.append(row)
+            
+        #job.upload(jason_data, force=True)
+        data = file_data
+        print data
         job.upload(data)
+        
         #job.set_job_channels('cf_internal')
-        job.launch(2, channels=['cf_internal'])
+        message = job.launch(units_count, channels)
+        
     return render(request, 'sample1/newJob.html', {'form': form})
+
 
